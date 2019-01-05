@@ -1,0 +1,14 @@
+package facade;
+
+import java.util.List;
+
+import dto.BiddingDto;
+import exception.BiddingException;
+import exception.CarException;
+import models.Car;
+
+public interface BiddingFacade {
+	List<BiddingDto> fetchAllBidding()throws BiddingException;
+	
+	Car getCarDetails(Long id)throws CarException;
+}
