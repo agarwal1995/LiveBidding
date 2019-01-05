@@ -36,6 +36,9 @@ public class Routes implements ApplicationRoutes {
         
         router.GET().route("/ajax/user/{id}").with(ApplicationController::getUser);
         router.POST().route("/ajax/create").with(ApplicationController::createUser);
+
+        router.GET().route("/index").with(ApplicationController::index);
+        router.GET().route("/home").with(ApplicationController::home);
     }
 
 }

@@ -74,8 +74,6 @@ public class ApplicationController {
     	List<UserDto> list=userFacade.getUsersData();
     	return Results.ok().json().render(list);
     }
-	
-    
     
 	public Result getAllBidding() {
 		List<BiddingDto> biddingDto;
@@ -102,4 +100,10 @@ public class ApplicationController {
 	public Result index() {
 		return Results.html();
 	}
+
+    public Result home() {
+
+        return Results.html();
+
+    }
 }
