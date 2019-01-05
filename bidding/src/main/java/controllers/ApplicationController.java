@@ -32,78 +32,40 @@
 
 package controllers;
 
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-
-import dto.BiddingDto;
-import dto.UserDto;
-import exception.BiddingException;
-import exception.CarException;
-import facade.BiddingFacade;
-import facade.BiddingFacadeImpl;
-import facade.UserFacade;
-import models.Car;
 import ninja.Result;
 import ninja.Results;
-import ninja.params.PathParam;
+
+import com.google.inject.Singleton;
+
 
 @Singleton
 public class ApplicationController {
-	final static Logger log = LoggerFactory.getLogger(BiddingFacadeImpl.class);
-	
-	@Inject
-	BiddingFacade biddingFacade;
-	@Inject
-	UserFacade userFacade;
-	
-	public Result createUser(UserDto user) {
-		userFacade.createUsers(user);
-		return Results.ok().json().render("user");
-	}
-	
-	public Result getUser(@PathParam("id") Long id) {
-		UserDto user = userFacade.getUser(id);
-		return Results.ok().json().render(user);
-	}
-    public Result GetUsers() {
-    	List<UserDto> list=userFacade.getUsersData();
-    	return Results.ok().json().render(list);
+
+    public Result index() {
+
+        return Results.html();
+
     }
-    
-	public Result getAllBidding() {
-		List<BiddingDto> biddingDto;
-		try {
-			biddingDto = biddingFacade.fetchAllBidding();
-		} catch(BiddingException e) {
-			log.info(e.getMessage());
-			return Results.badRequest().json().render("Some Error Occured : Please Try Again After Sometime");
-		}
-		return Results.ok().json().render(biddingDto);
-	}
-	
-	public Result getCarDetail(@PathParam("id") Long id) {
-		Car car;
-		try {
-			car = biddingFacade.getCarDetails(id);
-		} catch(CarException e) {
-			log.info(e.getMessage());
-			return Results.badRequest().json().render("Some Error Occured , Please Try Again After Sometime");
-		}
-		return Results.ok().json().render(car);
-	}
-	
-	public Result index() {
-		return Results.html();
-	}
 
     public Result home() {
 
         return Results.html();
+
+    }
+
+
+    public Result helloWorldJson() {
+
+        SimplePojo simplePojo = new SimplePojo();
+        simplePojo.content = "Hello World! Hello Json!";
+
+        return Results.json().render(simplePojo);
+
+    }
+
+    public static class SimplePojo {
+
+        public String content;
 
     }
 }
