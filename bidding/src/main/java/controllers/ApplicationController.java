@@ -46,19 +46,26 @@ public class ApplicationController {
         return Results.html();
 
     }
-    
+
+    public Result home() {
+
+        return Results.html();
+
+    }
+
+
     public Result helloWorldJson() {
-        
+
         SimplePojo simplePojo = new SimplePojo();
         simplePojo.content = "Hello World! Hello Json!";
 
         return Results.json().render(simplePojo);
 
     }
-    
+
     public static class SimplePojo {
 
         public String content;
-        
+
     }
 }
