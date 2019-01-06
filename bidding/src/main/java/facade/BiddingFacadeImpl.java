@@ -3,6 +3,7 @@ package facade;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.lang.*;
 import javax.persistence.EntityManager;
 
 import org.slf4j.Logger;
@@ -24,6 +25,30 @@ public class BiddingFacadeImpl implements BiddingFacade{
 
 	final static Logger log = LoggerFactory.getLogger(BiddingFacadeImpl.class);
 
+	@Override
+	@Transactional
+	public Long maxBid(Long id,Long price)throws BiddingException {
+		log.info("hghrsnfrer");
+		try {
+			Long cT =  System.currentTimeMillis();
+			EntityManager em = entityManagerProvider.get();
+			Bidding bidding = new Bidding();
+			bidding = em.find(Bidding.class,id);
+			if(bidding.getEndTime()<cT) {
+				throw new BiddingException("Bidding Is Closed");
+			} 
+			if(bidding.getStartTime()>cT) {
+				throw new BiddingException("Bidding Is Yet To Open");
+			}
+			if(price>bidding.getPrice()) {
+				bidding.setPrice(price);
+			}
+			return bidding.getPrice();
+		}catch(Exception e) {
+			throw new BiddingException(e.getMessage());
+		}
+	}
+	
 	@Override
 	@Transactional
 	public List<BiddingDto> fetchAllBidding()throws BiddingException {

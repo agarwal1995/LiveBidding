@@ -39,6 +39,8 @@ public class Routes implements ApplicationRoutes {
 
         router.GET().route("/index").with(ApplicationController::index);
         router.GET().route("/home").with(ApplicationController::home);
+        
+        router.GET().route("/assets/{fileName: .*}").with(AssetsController.class, "serveStatic");
     }
 
 }

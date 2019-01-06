@@ -9,6 +9,7 @@ import facade.UserFacadeImpl;
 import com.google.inject.Singleton;
 import ninja.utils.NinjaProperties;
 
+
 @Singleton
 public class Module extends AbstractModule {
 
@@ -20,6 +21,7 @@ public class Module extends AbstractModule {
 
         bind(BiddingFacade.class).to(BiddingFacadeImpl.class);
         bind(UserFacade.class).to(UserFacadeImpl.class);
+        bind(ScheduledAction.class);
 
     }
 }
