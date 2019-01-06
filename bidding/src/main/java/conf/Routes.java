@@ -19,6 +19,7 @@ package conf;
 
 
 import ninja.AssetsController;
+import controllers.BidController;
 import ninja.Router;
 import ninja.application.ApplicationRoutes;
 import controllers.ApplicationController;
@@ -39,6 +40,7 @@ public class Routes implements ApplicationRoutes {
 
         router.GET().route("/index").with(ApplicationController::index);
         router.GET().route("/home").with(ApplicationController::home);
+        router.POST().route("/ajax/bid/{id}/{price}").with(BidController::getMaxBid);
         
         router.GET().route("/assets/{fileName: .*}").with(AssetsController.class, "serveStatic");
     }

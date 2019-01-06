@@ -18,19 +18,50 @@ import exception.BiddingException;
 import exception.CarException;
 import models.Bidding;
 import models.Car;
+import ninja.cache.NinjaCache;	
 
 public class BiddingFacadeImpl implements BiddingFacade{
 	@Inject
 	Provider<EntityManager> entityManagerProvider;
-
+	@Inject 
+	NinjaCache ninjaCache;
+	
 	final static Logger log = LoggerFactory.getLogger(BiddingFacadeImpl.class);
 
+	@Override
+	@Transactional
+	public void checkBiddings() {
+		log.info("hgdsfD");
+		List<BiddingDto> posts = ninjaCache.get("posts", List.class);
+	    if(posts == null) {
+	    	log.info("ghsrdhnbfds");
+	    	List<BiddingDto> biddingDto;
+				EntityManager em = entityManagerProvider.get();
+				List<Bidding> biddings = new ArrayList<>();
+				biddings = em.createQuery("from Bidding",Bidding.class)
+						.getResultList();
+				biddingDto = new ArrayList<BiddingDto>();
+				for(Bidding b : biddings) {
+					BiddingDto biddingIndividual = new BiddingDto();
+					biddingIndividual.setId(b.getBiddingid());
+					biddingIndividual.setPrice(b.getPrice());
+					biddingIndividual.setStartTime(b.getStartTime());
+					biddingIndividual.setEndTime(b.getEndTime());
+					biddingIndividual.setBidders(b.getBidders());
+					biddingIndividual.setStatus(b.getStatus());
+					biddingIndividual.setImageUrl(b.getImageUrl());
+					biddingDto.add(biddingIndividual);
+	        ninjaCache.set("posts", biddingDto, "30mn");
+			}
+	    }
+	}
+	
 	@Override
 	@Transactional
 	public Long maxBid(Long id,Long price)throws BiddingException {
 		log.info("hghrsnfrer");
 		try {
-			Long cT =  System.currentTimeMillis();
+			Long cT =  System.currentTimeMillis()/1000;
 			EntityManager em = entityManagerProvider.get();
 			Bidding bidding = new Bidding();
 			bidding = em.find(Bidding.class,id);

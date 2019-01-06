@@ -13,4 +13,6 @@ List<BiddingDto> fetchAllBidding()throws BiddingException;
 Car getCarDetails(Long id)throws CarException;
 
 Long maxBid(Long id,Long price)throws Exception;
+
+void checkBiddings();
 } 

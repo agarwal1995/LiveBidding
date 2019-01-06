@@ -32,7 +32,7 @@ public class BidController {
 	@Inject
 	UserFacade userFacade;
 	
-	public Result getMaxBid(@PathParam("id")Long id,@Param("price")Long price) {
+	public Result getMaxBid(@PathParam("id")Long id,@PathParam("price")Long price) {
 		
 		try {
 			Long maxPrice = biddingFacade.maxBid(id,price);

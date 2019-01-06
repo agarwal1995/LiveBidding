@@ -20,5 +20,6 @@ public class ScheduledAction {
 	@Schedule(delay = 5, initialDelay = 1, timeUnit = TimeUnit.SECONDS)
 	public void checkBidding(){
 		log.info("jdsjhdjhdsjhdjhdjhdh0");
+		biddingFacade.checkBiddings();
 	}
 }
